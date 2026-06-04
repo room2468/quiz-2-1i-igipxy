@@ -1,19 +1,25 @@
 #!/bin/bash
 
-read -r total
-read -r used
+# Read input
+read total
+read used
 
-free=$(( total - used ))
-usage=$(( used * 100 / total ))
+# Calculate free memory
+free=$((total - used))
 
-if (( usage >= 90 )); then
-    status="Critical"
-elif (( usage >= 70 )); then
+# Calculate usage percentage
+usage=$((used * 100 / total))
+
+# Determine status
+if [ $usage -le 50 ]; then
+    status="Normal"
+elif [ $usage -le 90 ]; then
     status="Warning"
 else
-    status="Normal"
+    status="Critical"
 fi
 
+# Output results
 echo "Free: $free MB"
 echo "Usage: $usage%"
 echo "Status: $status"
